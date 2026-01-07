@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat</title>
+  <style>
+    body { font-family: sans-serif; }
+    
+#new-indicator {
+  display: none;
+  position: sticky;
+  bottom: 60px;
+  margin: 0 auto;
+  padding: 10px 14px;
+  background: #5faecb;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+#new-indicator.visible {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+    #messages {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 300px;
+  overflow-y: auto;
+  background: #fafafa;
+  position: relative;
+  }
+
+  /* Basis für jede Nachricht */
+    #messages div {
+  max-width: 70%;
+  margin: 6px 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  }
+      .me {
+      margin-left: auto;
+      background: #d0ebff;
+      text-align: right;
+    }
+
+    .other {
+      margin-right: auto;
+      background: #eaeaea;
+      text-align: left;
+    }
+#length-warning {
+  font-size: 12px;
+  margin-top: 4px;
+  color: #666;
+  text-align: right;
+}
+
+#length-warning.warn {
+  color: #d97706; /* orange */
+  font-weight: bold;
+}
+
+#length-warning.error {
+  color: #dc2626; /* rot */
+  font-weight: bold;
+}
+/* Timestamp unter jeder Nachricht */
+.timestamp {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+/* Timestamp rechts bei eigenen Nachrichten */
+.me .timestamp {
+  text-align: right;
+}
+
+/* Timestamp links bei anderen Nachrichten */
+.other .timestamp {
+  text-align: left;
+}
+
+  </style>
+</head>
+<body>
+
+  <div style="background:red;color:white;padding:10px">
+    TEST VERSION CHAT.HTML
+  </div>
+
+<h2 id="chat-with">Chat</h2>
+
+<div id="messages"></div>
+
+<div id="new-indicator">
+  <span id="unread-count">0</span> neue Nachrichten ↓
+</div>
+
+<textarea
+  id="msg-input"
+  placeholder="Nachricht…"
+  rows="2"
+  style="width:100%; resize:none;"
+></textarea>
+
+<!-- 👇 DAS HINZUFÜGEN -->
+<div id="length-warning"></div>
+
+<button id="send-btn">Senden</button>
+
+<script src="https://cdn.jsdelivr.net/npm/idb-keyval@6/dist/idb-keyval-iife.min.js"></script>
+<script src="/chat.js"></script>
+
+</body>
+</html>

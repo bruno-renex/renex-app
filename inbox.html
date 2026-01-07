@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>RENEX – Inbox</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 24px;
+    }
+
+    h1, h2 {
+      margin-top: 32px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    button {
+      margin-left: 8px;
+    }
+
+    #add-handle {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Inbox</h1>
+
+  <button id="logout-btn">Logout</button>
+
+  <hr />
+
+  <h2>Kontakt hinzufügen</h2>
+
+  <input
+    id="add-handle"
+    type="text"
+    placeholder="Handle (z. B. bob)"
+    autocomplete="off"
+  />
+  <button id="add-btn">Anfrage senden</button>
+
+  <hr />
+
+  <h2>Offene Anfragen</h2>
+  <ul id="pending"></ul>
+
+  <h2>Kontakte</h2>
+  <ul id="accepted"></ul>
+
+  <!-- 🔥 WICHTIG: Script GANZ UNTEN + type="module" -->
+<script type="module" src="/js/inbox.js"></script>
+
+</body>
+</html>

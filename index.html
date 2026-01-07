@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>RENEX Login</title>
+</head>
+<body>
+
+  <h1>RENEX Login</h1>
+
+  <input id="handle" value="demo" />
+  <button id="loginBtn">Login mit Passkey</button>
+
+<script type="module">
+import { loginWithPasskey } from "./js/auth.js";
+import { apiFetch } from "./js/api.js";
+
+// =========================================
+// 🔐 SICHERER AUTO-LOGIN CHECK
+// =========================================
+async function checkExistingSession() {
+  const token = localStorage.getItem("session_token");
+  if (!token) return;
+
+  try {
+    // Backend entscheidet
+    await apiFetch("/users/me");
+
+    // ✅ Session gültig → Inbox
+    window.location.replace("./inbox.html");
+  } catch (e) {
+    // ❌ Session ungültig / abgelaufen
+    console.warn("Session ungültig – Login erforderlich");
+
+    localStorage.removeItem("session_token");
+    localStorage.removeItem("user_handle");
+  }
+}
+
+// 🔥 SOFORT BEIM LADEN AUSFÜHREN
+checkExistingSession();
+
+// =========================================
+// 🔐 LOGIN BUTTON
+// =========================================
+document.getElementById("loginBtn").onclick = async () => {
+  const handle =
+    document.getElementById("handle").value.trim() || "demo";
+
+  try {
+    await loginWithPasskey(handle);
+
+    // 🔎 nach Login prüfen
+    await apiFetch("/users/me");
+
+    window.location.replace("./inbox.html");
+  } catch (e) {
+    alert("❌ Login fehlgeschlagen");
+  }
+};
+</script>
+
+</body>
+</html>
