@@ -1,2 +1,2 @@
-/*.* /:splat 200
-/* /index.html 200
+/js/*  /js/:splat 200
+/*     /index.html 200
