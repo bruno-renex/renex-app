@@ -1,3 +1,3 @@
-/js/*        /js/:splat        200
-/npm/*       https://cdn.jsdelivr.net/npm/:splat  200
-/*           /index.html       200
+/js/vendor/*  /js/vendor/:splat  200
+/js/*         /js/:splat         200
+/*            /index.html        200
