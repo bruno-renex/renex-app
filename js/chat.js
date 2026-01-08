@@ -10,6 +10,22 @@ function openKeyDB() {
     req.onsuccess = () => resolve(req.result);
   });
 }
+async function idbSet(key, value) {
+  const db = await openKeyDB();
+  const tx = db.transaction("keys", "readwrite");
+  tx.objectStore("keys").put(value, key);
+  return tx.complete;
+}
+
+async function idbGet(key) {
+  const db = await openKeyDB();
+  const tx = db.transaction("keys", "readonly");
+  return new Promise(resolve => {
+    const req = tx.objectStore("keys").get(key);
+    req.onsuccess = () => resolve(req.result ?? null);
+    req.onerror = () => resolve(null);
+  });
+}
 
 // ======================================================
 // CONFIG
@@ -82,7 +98,7 @@ async function loadPrivateKey() {
 
 
 async function loadPublicKey() {
-  return await idbKeyval.get("e2e-public-key");
+  return await idbGet("e2e-public-key");
 }
 
 async function exportPublicKey() {
@@ -496,9 +512,9 @@ async function initE2EKeys() {
   );
 
   await storePrivateKey(keyPair.privateKey);
+  
+// Public Key separat speichern (für späteren Austausch)
+await idbSet("e2e-public-key", keyPair.publicKey);
 
-  // Public Key separat speichern (für späteren Austausch)
-  await idbKeyval.set("e2e-public-key", keyPair.publicKey);
-
-  console.log("✅ E2E Keypair erzeugt & gespeichert");
+console.log("✅ E2E Keypair erzeugt & gespeichert");
 }
