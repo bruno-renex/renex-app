@@ -153,7 +153,22 @@ return;
     }))
   };
 
-  const assertion = await navigator.credentials.get({ publicKey });
+let assertion;
+
+try {
+  assertion = await navigator.credentials.get({ publicKey });
+  console.log("✅ WebAuthn assertion:", assertion);
+} catch (err) {
+  console.error("❌ WebAuthn ERROR:", err);
+
+  alert(
+    "WebAuthn Fehler:\n\n" +
+    err.name + "\n" +
+    err.message
+  );
+
+  throw err; // wichtig: damit Login sauber abbricht
+}
 
   const res = await fetch(`${API}/auth/login/finish`, {
   method: "POST",
